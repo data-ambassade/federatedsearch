@@ -1,3 +1,8 @@
+## Placeholder
+
+Work In Progress for making Federated Search MVP available for existing WordPress instance(s)
+
+## Introduction
 Design & development of an user interface (frontend) and federation service (backend API)for federated search.
 
 The objective of this development is to deliver a Github repository that helps people in setting up of a federative search based on open source software with a minimal dependency of developers. It should be easy to deploy (docker) for testing purposes and easy to deploy and adapt into an existing infrastructure.
