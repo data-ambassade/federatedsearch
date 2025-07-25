@@ -1,0 +1,85 @@
+.result-item {
+  padding: 1.5rem;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+  animation: fadeIn 0.5s ease-out;
+}
+.result-item:hover {
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+  border-color: #4A90E2;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.result-arrow-button {
+  align-items: center;
+  color: #28529C;  
+  justify-content: flex-end;   
+  float: right;                
+  transition: color 0.3s ease; 
+}
+.result-arrow-button i {
+  transition: transform 0.3s ease;
+}
+.result-arrow-button:hover {
+  color: #357ABD; !important            
+}
+.result-arrow-button:hover i {
+  transform: translateX(7px);  
+  color: #357ABD; 
+}
+#category-list label {
+  display: block!important;
+  margin: 2px 21px 10px 21px!important;
+  font-size: 100%!important;
+  font-style: inherit!important;
+  font-weight: inherit!important;
+  cursor: pointer!important;
+}
+#mobile-category-list label {
+  font-size: 100%!important;
+  font-style: inherit!important;
+  font-weight: inherit!important;
+}
+#category-list input[type="checkbox"] {
+   margin-right: 8px!important;
+   transform: scale(1.2)!important;
+   cursor: pointer!important;
+}
+#offcanvasToggleBtn {
+  display: none;
+}
+/* Hide category panel by default on small screens */
+@media (max-width: 768px) {
+  .pagination {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    float: none !important;
+  }
+  #category-list {
+    display: none !important;
+  }
+  #offcanvasToggleBtn {
+    display: block;
+  }
+}
+@media (min-width: 768px) {
+  .pagination {
+	align-items: center !important;
+	justify-content: flex-end !important;
+	float: right !important; 
+  }
+}
+.close-panel {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
