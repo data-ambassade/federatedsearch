@@ -1,0 +1,242 @@
+{
+  "@context": {
+    "dcat": "http://www.w3.org/ns/dcat",
+    "dct": "http://purl.org/dc/terms/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "xsd": "http://www.w3.org/2001/XMLSchema",
+    "vcard": "http://www.w3.org/2006/vcard/ns",
+    "adms": "http://www.w3.org/ns/adms",
+    "geo": "http://www.opengis.net/ont/geosparql",
+    "locn": "http://www.w3.org/ns/locn",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema",
+    "hydra": "http://www.w3.org/ns/hydra/core"
+  },
+  "@graph": [
+    {
+      "@type": "dcat:Catalog",
+      "@id": "https://ogc-demo.clearly.app/catalog",
+      "dct:title": "Open Data Catalogus Gemeente Rotterdam",
+      "dct:description": "Deze catalogus bevat datasets van de Gemeente Rotterdam zoals beschikbaar via OGC API.",
+      "dct:publisher": {
+        "@type": "foaf:Organization",
+        "foaf:name": "Gemeente Rotterdam",
+        "@id": "https://standaarden.overheid.nl/owms/terms/Gemeente_Rotterdam"
+      },
+      "dct:language": [
+        {
+          "@id": "http://publications.europa.eu/resource/authority/language/NLD"
+        }
+      ],
+      "dcat:dataset": [
+        {
+          "@type": "dcat:Dataset",
+          "@id": "https://ogc-demo.clearly.app/collections/677e71b550486f0995f97316/items/6784ef8f86feed85669e5bea",
+          "dct:identifier": "6784ef8f86feed85669e5bea",
+          "dct:title": "Wildrooster",
+          "dct:description": "Geen beschrijving beschikbaar.",
+          "dct:publisher": {
+            "@type": "foaf:Agent",
+            "foaf:name": "Gemeente Rotterdam"
+          },
+          "dct:catalog": "oup_ogc_records",
+          "dct:spatial": {
+            "@type": "dct:Location",
+            "rdfs:label": "Gemeente Rotterdam",
+            "locn:geometry": {
+              "@type": "geo:Geometry",
+              "geo:asWKT": "POLYGON((3.061773 53.331024, 3.061773 47.891949, 10.740872 47.891949, 10.740872 53.331024, 3.061773 53.331024))"
+            }
+          },
+          "dcat:distribution": [
+            {
+              "@type": "dcat:Distribution",
+              "dct:title": "GeoJSON download",
+              "dcat:accessURL": {
+                "@id": "https://ogc-demo.clearly.app/collections/677e71b550486f0995f97316/items/6784ef8f86feed85669e5bea"
+              },
+              "dct:format": "application/json+geojson"
+            },
+            {
+              "@type": "dcat:Distribution",
+              "dct:title": "Wildrooster",
+              "dcat:accessURL": {
+                "@id": "https://diensten.rotterdam.nl/arcgis/services/SB_Infra/Wildrooster/MapServer/WFSServer?request=GetCapabilities&service=WFS"
+              },
+              "dct:format": "OGC:WFS"
+            },
+            {
+              "@type": "dcat:Distribution",
+              "dct:title": "Wildrooster",
+              "dcat:accessURL": {
+                "@id": "https://diensten.rotterdam.nl/arcgis/services/SB_Infra/Wildrooster/MapServer/WMSServer?request=GetCapabilities&service=WMS"
+              },
+              "dct:format": "OGC:WMS"
+            }
+          ]
+        }
+      ],
+      "hydra:totalItems": 68,
+      "hydra:itemsPerPage": 1,
+      "hydra:pageIndex": 1,
+      "hydra:view": {}
+    },
+    {
+      "@type": "dcat:Catalog",
+      "@id": "https://data.rotterdam.nl/catalog",
+      "dct:title": "Open Data Catalogus Gemeente Rotterdam",
+      "dct:description": "Deze catalogus bevat datasets die door de gemeente Rotterdam beschikbaar zijn gesteld als open data.",
+      "dct:publisher": {
+        "@type": "foaf:Organization",
+        "foaf:name": "Gemeente Rotterdam",
+        "@id": "https://standaarden.overheid.nl/owms/terms/Gemeente_Rotterdam"
+      },
+      "dct:language": [
+        {
+          "@id": "http://publications.europa.eu/resource/authority/language/NLD"
+        }
+      ],
+      "dcat:dataset": [
+        {
+          "@type": "dcat:Dataset",
+          "@id": "https://dimpact.commonground.nu/apps/openregister/api/objects/service-blueprint/service-blueprint/6cb16959-1529-49d5-a0fd-2a27b270845c",
+          "dct:title": "Aangifte verhuizing",
+          "dct:description": "Optimalisatie van de klantinteractie in het KCC aan de hand van de case Verhuizing",
+          "dct:identifier": "6cb16959-1529-49d5-a0fd-2a27b270845c",
+          "dct:publisher": {
+            "@type": "foaf:Agent",
+            "foaf:name": "Gemeente Rotterdam"
+          },
+          "dct:creator": {
+            "@type": "foaf:Agent",
+            "foaf:name": "Afdeling Stadsbeheer"
+          },
+          "dcat:contactPoint": {
+            "@type": "vcard:Kind",
+            "vcard:fn": "Data Loket Gemeente Rotterdam",
+            "vcard:hasEmail": "mailto:dataloket@rotterdam.nl",
+            "vcard:hasURL": { "@id": "https://data.rotterdam.nl/contact" }
+          },
+          "dct:issued": { "@type": "xsd:date", "@value": "2025-06-11" },
+          "dct:modified": { "@type": "xsd:date", "@value": "2025-07-14" },
+          "dct:spatial": {
+            "@type": "dct:Location",
+            "rdfs:label": "Gemeente Rotterdam",
+            "locn:geometry": {
+              "@type": "geo:Geometry",
+              "geo:asWKT": "POLYGON((3.971 51.856, 4.599 51.856, 4.599 51.827, 3.971 51.827, 3.971 51.856))"
+            }
+          },
+          "dct:temporal": {
+            "@type": "dct:PeriodOfTime",
+            "dct:startDate": { "@type": "xsd:date", "@value": "2020-01-01" },
+            "dct:endDate": { "@type": "xsd:date", "@value": "2024-12-31" }
+          },
+          "dct:license": {
+            "@id": "http://creativecommons.org/publicdomain/zero/1.0/"
+          },
+          "dcat:keyword/tag": [
+                "dataset",
+                "Fiets",
+                "Fietsroute",
+                "Fietsroutes",
+                "fiets",
+                "fietsroute",
+                "fietsroutes"
+            ],
+          "dcat:theme": [
+            {
+              "@id": "https://data.example.org/theme/99303dbd-4e2f-47a8-9a03-7f66eeb995f3",
+              "rdfs:label": "Thema 99303dbd-4e2f-47a8-9a03-7f66eeb995f3"
+            }
+          ],
+          "dct:catalog": [
+            {
+              "@id": "http://example.org/catalog/unknown",
+              "dct:title": "Dimpact"
+            }
+          ],
+          "dcat:distribution": [
+            {
+              "@type": "dcat:Distribution",
+              "@id": "files/Open Registers/Service Blueprint Register/6cb16959-1529-49d5-a0fd-2a27b270845c/Klantinteractie_ServiceBlueprint_Thijs_ Aangifte_verhuizing.pdf",
+              "dct:title": "Klantinteractie_ServiceBlueprint_Thijs_ Aangifte_verhuizing.pdf",
+              "dcat:accessURL": {
+                "@id": "https://dimpact.commonground.nu/index.php/s/Dfa8eXnRSP9LSTq"
+              },
+              "dct:format": {
+                "@id": "http://publications.europa.eu/resource/authority/file-type/PDF"
+              },
+              "dcat:mediaType": {
+                "@id": "http://www.iana.org/assignments/media-types/application/pdf"
+              }
+            },
+            {
+              "@type": "dcat:Distribution",
+              "@id": "files/Open Registers/Service Blueprint Register/6cb16959-1529-49d5-a0fd-2a27b270845c/Klantinteractie_ServiceBlueprint_Thijs_ Aangifte_verhuizing.pdf",
+              "dct:title": "Klantinteractie_ServiceBlueprint_Thijs_ Aangifte_verhuizing.pdf",
+              "dcat:accessURL": {
+                "@id": "https://dimpact.commonground.nu/index.php/s/dSSkRyjp3WZDy5M"
+              },
+              "dct:format": {
+                "@id": "http://publications.europa.eu/resource/authority/file-type/PDF"
+              },
+              "dcat:mediaType": {
+                "@id": "http://www.iana.org/assignments/media-types/application/pdf"
+              }
+            },
+            {
+              "@type": "dcat:Distribution",
+              "@id": "files/Open Registers/Service Blueprint Register/6cb16959-1529-49d5-a0fd-2a27b270845c/Persona's_klantinteractie_Thijs.pdf",
+              "dct:title": "Persona's_klantinteractie_Thijs.pdf",
+              "dcat:accessURL": {
+                "@id": "https://dimpact.commonground.nu/index.php/s/tsjfMo8xJJ7QzgQ"
+              },
+              "dct:format": {
+                "@id": "http://publications.europa.eu/resource/authority/file-type/PDF"
+              },
+              "dcat:mediaType": {
+                "@id": "http://www.iana.org/assignments/media-types/application/pdf"
+              }
+            },
+            {
+              "@type": "dcat:Distribution",
+              "@id": "files/Open Registers/Service Blueprint Register/6cb16959-1529-49d5-a0fd-2a27b270845c/Toelichting_Klantinteractie_ServiceBlueprint_Thijs_ Aangifte_verhuizing.pdf",
+              "dct:title": "Toelichting_Klantinteractie_ServiceBlueprint_Thijs_ Aangifte_verhuizing.pdf",
+              "dcat:accessURL": {
+                "@id": "https://dimpact.commonground.nu/index.php/s/nYcbLizbb6imiHt"
+              },
+              "dct:format": {
+                "@id": "http://publications.europa.eu/resource/authority/file-type/PDF"
+              },
+              "dcat:mediaType": {
+                "@id": "http://www.iana.org/assignments/media-types/application/pdf"
+              }
+            },
+            {
+              "@type": "dcat:Distribution",
+              "@id": "files/Open Registers/Service Blueprint Register/6cb16959-1529-49d5-a0fd-2a27b270845c/Toelichting_Klantinteractie_ServiceBlueprint_Thijs_ Aangifte_verhuizing.pdf",
+              "dct:title": "Toelichting_Klantinteractie_ServiceBlueprint_Thijs_ Aangifte_verhuizing.pdf",
+              "dcat:accessURL": {
+                "@id": "https://dimpact.commonground.nu/index.php/s/4cHsNswGZdeEZXm"
+              },
+              "dct:format": {
+                "@id": "http://publications.europa.eu/resource/authority/file-type/PDF"
+              },
+              "dcat:mediaType": {
+                "@id": "http://www.iana.org/assignments/media-types/application/pdf"
+              }
+            }
+          ]
+        }
+      ],
+      "hydra:totalItems": 1,
+      "hydra:itemsPerPage": 20,
+      "hydra:pageIndex": 1,
+      "hydra:view": {
+        "@type": "hydra:PartialCollectionView",
+        "hydra:next": null,
+        "hydra:previous": null
+      }
+    }
+  ]
+}
