@@ -15,22 +15,14 @@
   to { opacity: 1; transform: translateY(0); }
 }
 .result-arrow-button {
-  align-items: center;
+  display: inline-flex;   
+  align-items: center;      
   color: #28529C;  
   justify-content: flex-end;   
   float: right;                
-  transition: color 0.3s ease; 
-}
-.result-arrow-button i {
-  transition: transform 0.3s ease;
-}
-.result-arrow-button:hover {
-  color: #357ABD; !important            
-}
-.result-arrow-button:hover i {
-  transform: translateX(7px);  
-  color: #357ABD; 
-}
+  position: relative;          
+  top: -25px;              
+} 
 #category-list label {
   display: block!important;
   margin: 2px 21px 10px 21px!important;
@@ -49,6 +41,42 @@
    transform: scale(1.2)!important;
    cursor: pointer!important;
 }
+#theme-list label {
+  display: block!important;
+  margin: 2px 21px 10px 21px!important;
+  font-size: 100%!important;
+  font-style: inherit!important;
+  font-weight: inherit!important;
+  cursor: pointer!important;
+}
+#mobile-theme-list label {
+  font-size: 100%!important;
+  font-style: inherit!important;
+  font-weight: inherit!important;
+}
+#theme-list input[type="checkbox"] {
+   margin-right: 8px!important;
+   transform: scale(1.2)!important;
+   cursor: pointer!important;
+}
+#keyword-list label {
+  display: block!important;
+  margin: 2px 21px 10px 21px!important;
+  font-size: 100%!important;
+  font-style: inherit!important;
+  font-weight: inherit!important;
+  cursor: pointer!important;
+}
+#mobile-keyword-list label {
+  font-size: 100%!important;
+  font-style: inherit!important;
+  font-weight: inherit!important;
+}
+#keyword-list input[type="checkbox"] {
+   margin-right: 8px!important;
+   transform: scale(1.2)!important;
+   cursor: pointer!important;
+}
 #offcanvasToggleBtn {
   display: none;
 }
@@ -59,6 +87,11 @@
     align-items: center !important;
     justify-content: center !important;
     float: none !important;
+  }
+  .result-item {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    box-sizing: border-box;
   }
   #category-list {
     display: none !important;
@@ -82,4 +115,7 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+}
+.ekit-wid-con .ekit_close-side-widget {
+   border: none !important;
 }
