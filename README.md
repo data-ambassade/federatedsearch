@@ -16,5 +16,4 @@ The federation service API gets search requests and return results that conform 
 
 The service also federates in its own. One can query multiple endpoints and once. The service combines the results. 
 
-<img width="806" height="497" alt="image" src="https://github.com/user-attachments/assets/ed63ad11-9168-4aec-88e0-8e438b8fcf78" />
-
+<img width="1240" height="748" alt="federated search diagram" src="https://github.com/user-attachments/assets/dbc60e64-f5b1-4f57-9ee4-cfe270b65719" />
