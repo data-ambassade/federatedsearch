@@ -1,6 +1,6 @@
 [
     {
-        "id": "bd803264bdc6f8b2",
+        "id": "c638a2b2ec4c7d3f",
         "type": "tab",
         "label": "Federated search",
         "disabled": false,
@@ -8,15 +8,835 @@
         "env": []
     },
     {
-        "id": "ddea5c78d72863b4",
-        "type": "Service Host",
-        "apiBase": "https://api.openai.com/v1",
-        "secureApiKeyHeaderOrQueryName": "Authorization",
-        "organizationId": "",
-        "name": ""
+        "id": "f9d4ae69ff76e6a3",
+        "type": "http in",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "/generic_federated_search",
+        "url": "/generic_federated_search",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "5a6ce3efb5229512",
+        "x": 128,
+        "y": 98,
+        "wires": [
+            [
+                "bfb1ec7da4520606"
+            ]
+        ]
     },
     {
-        "id": "1d1dada2ec4b7d92",
+        "id": "e0e6cc456b768077",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "Linked Data (Triply)",
+        "func": "// map incoming fields to application specific fields\n// and/or add logic\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 447,
+        "wires": [
+            [
+                "ab52aac8b60e1102"
+            ]
+        ]
+    },
+    {
+        "id": "080b09906574f961",
+        "type": "http request",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "OpenCatalogi",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "https://rotterdam.accept.commonground.nu/apps/opencatalogi/api/federation/publications?_search={{payload.query}}&_page={{payload.page}}&_limit=10&_facetable=true&_aggregate=true&_extend%5B%5D=%40self.schema&_facets[@self][register][type]=terms&_facets[@self][schema][type]=terms&_facets[@self][created][type]=terms&_facets[@self][updated][type]=terms&_facets[@self][published][type]=terms&_facets[@self][directory][type]=terms&_facets[@self][catalogs][type]=terms",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1060,
+        "y": 367,
+        "wires": [
+            [
+                "e2eafbf13764669e"
+            ]
+        ]
+    },
+    {
+        "id": "d3d81b319264c9a9",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "OpenCatalogi",
+        "func": "// map incoming fields to application specific fields\n// and/or add logic\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 367,
+        "wires": [
+            [
+                "080b09906574f961"
+            ]
+        ]
+    },
+    {
+        "id": "1054f502853f2ca9",
+        "type": "switch",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "Federate endpoint switch",
+        "property": "payload.source",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "opencatalogi",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "triply",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "oup_ogc_records",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "oup_graphql",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 5,
+        "x": 448,
+        "y": 398,
+        "wires": [
+            [
+                "d3d81b319264c9a9"
+            ],
+            [
+                "e0e6cc456b768077"
+            ],
+            [
+                "0888c9a4dc274238"
+            ],
+            [
+                "735c03275c380af3"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "23ca288239488fa1",
+        "type": "comment",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "OpenCatalogi",
+        "info": "OpenCatalogi",
+        "x": 810,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "fa11a218184f9746",
+        "type": "comment",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "Triply",
+        "info": "Triply",
+        "x": 790,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "ab52aac8b60e1102",
+        "type": "http request",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "Linked Data (Triply)",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.demo.triplydb.com/queries/rotterdam-distributie-geodata/zoeken-over-meerdere-bronnen/run?query={{payload.query}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1070,
+        "y": 447,
+        "wires": [
+            [
+                "996599f2a4ec82d3"
+            ]
+        ]
+    },
+    {
+        "id": "996599f2a4ec82d3",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "Linked Data (Triply)",
+        "func": "//map application specific results to generic json response\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1350,
+        "y": 447,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0888c9a4dc274238",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "oup_ogc_records",
+        "func": "// Get query value\nlet q = '';\nif (msg.payload && typeof msg.payload === 'object' && 'query' in msg.payload) {\n    q = String(msg.payload.query || '').trim();\n} else if (msg.req && msg.req.query && 'query' in msg.req.query) {\n    q = String(msg.req.query.query || '').trim();\n}\n\n// If query is a 24-char hex, skip = output as is\nif (/^[a-f0-9]{24}$/i.test(q)) {\n    node.warn(`Skipping reset for 24-char hex query: ${q}`);\n    return msg; // pass through unchanged\n}\n\n// Otherwise, reset to \"\"\nif (msg.payload && typeof msg.payload === 'object') {\n    msg.payload.query = '';\n} else {\n    msg.payload = { query: '' };\n}\n\nif (msg.req && msg.req.query) {\n    msg.req.query.query = '';\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 828,
+        "y": 527,
+        "wires": [
+            [
+                "b1c7e162020e421e"
+            ]
+        ]
+    },
+    {
+        "id": "cc76d6e734078cc9",
+        "type": "comment",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "OGC Records OUP",
+        "info": "Test",
+        "x": 830,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "735c03275c380af3",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "oup_graphql",
+        "func": "// map incoming fields to application specific fields\n// and/or add logic\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 808,
+        "y": 607,
+        "wires": [
+            [
+                "d4ddecacf723a842"
+            ]
+        ]
+    },
+    {
+        "id": "532cd04a5b6d05cb",
+        "type": "comment",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "OGC GraphQL",
+        "info": "Test",
+        "x": 820,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "d4ddecacf723a842",
+        "type": "http request",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "oup_graphql",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "https://ogc-demo.clearly.app/collections",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1048,
+        "y": 607,
+        "wires": [
+            [
+                "b3bc38251229e6f3"
+            ]
+        ]
+    },
+    {
+        "id": "b3bc38251229e6f3",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "oup_graphql",
+        "func": "//map application specific results to generic json response\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1328,
+        "y": 607,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "abaf929c18fd4039",
+        "type": "switch",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "suggest?",
+        "property": "payload.suggest",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 180,
+        "y": 227,
+        "wires": [
+            [
+                "0a8b851346fcb3ce"
+            ],
+            [
+                "e6b6b2eef8f5fa7f"
+            ]
+        ]
+    },
+    {
+        "id": "0a8b851346fcb3ce",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "prepare prompt",
+        "func": "// prepare prompt for openai\n\nvar prompt = []\n\nprompt = \n{\n   \"model\" : \"gpt-3.5-turbo\",\n    \"max_tokens\"  :  1024 ,\n    \"messages\" :  \n        [\n            {\n                \"role\": \"user\",\n                \"content\": [\n                    {\n                        \"type\": \"text\",\n                        \"text\": \"Geef mij een genummerde lijst in de vorm van een json array (id, synoniem) met 3 synoniemen voor \" + msg.payload.query\n                    }\n                ]\n            }\n        ]\n}\n\ndelete msg.payload\n\nmsg.payload = prompt\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 220,
+        "wires": [
+            [
+                "436282ea6d6e5c8a"
+            ]
+        ]
+    },
+    {
+        "id": "436282ea6d6e5c8a",
+        "type": "OpenAI API",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "chat completion",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "ddea5c78d72863b4",
+        "method": "createChatCompletion",
+        "x": 1336,
+        "y": 222,
+        "wires": [
+            [
+                "0d1bbdedfd35953f"
+            ]
+        ]
+    },
+    {
+        "id": "8bcafda6bb64c30f",
+        "type": "comment",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "API Key",
+        "info": "OPENAI_API_KEY="Your OpenAI Key",
+        "x": 1320,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "0d1bbdedfd35953f",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "post-process",
+        "func": "\nvar obj =[]\n// Haal de content-string op\n\nobj = msg.payload.choices[0].message.content;\n\ndelete msg.payload\n\nmsg.payload = obj;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1708,
+        "y": 222,
+        "wires": [
+            [
+                "eab5b3540a6dd352"
+            ]
+        ]
+    },
+    {
+        "id": "153002058024a461",
+        "type": "comment",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "Get suggestions on a query",
+        "info": "parameter suggest=true. parameter query contains the term to search for synonyms\n",
+        "x": 860,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "d8ef7bf4c935ef25",
+        "type": "comment",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "Suggest is true?",
+        "info": "In case suggest=true than find suggestions on the query",
+        "x": 160,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "8a480b18f6d1ea92",
+        "type": "switch",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "Format switch",
+        "property": "format",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "json",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "turtle",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "html",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 2000,
+        "y": 540,
+        "wires": [
+            [
+                "31f6b5e5a64d01d6"
+            ],
+            [
+                "f39a1ded107bd4ed"
+            ],
+            [
+                "e0f80b994885aa82"
+            ],
+            [
+                "e2be269174eb161d"
+            ]
+        ]
+    },
+    {
+        "id": "bfb1ec7da4520606",
+        "type": "change",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "Save parameters",
+        "rules": [
+            {
+                "t": "set",
+                "p": "federation",
+                "pt": "flow",
+                "to": "payload.federation",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "query",
+                "pt": "flow",
+                "to": "payload.query",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "suggest",
+                "pt": "flow",
+                "to": "payload.suggest",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "source",
+                "pt": "flow",
+                "to": "payload.source",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "model",
+                "pt": "flow",
+                "to": "payload.model",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "format",
+                "pt": "flow",
+                "to": "payload.format",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 150,
+        "y": 167,
+        "wires": [
+            [
+                "abaf929c18fd4039"
+            ]
+        ]
+    },
+    {
+        "id": "42e359635038b62b",
+        "type": "comment",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "Call the selected endpoint",
+        "info": "In case suggest=true than find suggestions on the query",
+        "x": 450,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "31f6b5e5a64d01d6",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "jsonld to json",
+        "func": "function mapJsonLdToPlainJson(jsonld) {\n    function extractValue(obj, key) {\n        if (!obj || !obj[key]) return null;\n        const val = obj[key];\n        if (Array.isArray(val)) return val.map(extractSingleValue);\n        return extractSingleValue(val);\n    }\n\n    function extractSingleValue(val) {\n        if (typeof val === 'string') return val;\n        if (val['@value']) return val['@value'];\n        if (val['@id']) return val['@id'];\n        if (val['foaf:name']) return val['foaf:name'];\n        if (val['rdfs:label']) return val['rdfs:label'];\n        if (val['vcard:fn']) return val['vcard:fn'];\n        if (val['vcard:hasEmail']) return val['vcard:hasEmail'];\n        if (val['vcard:hasURL']) return val['vcard:hasURL'];\n        if (val['locn:geometry']) return val['locn:geometry']['geo:asWKT'] || null;\n        if (val['dct:startDate'] || val['dct:endDate']) {\n            return {\n                start: val['dct:startDate']?.['@value'] || null,\n                end: val['dct:endDate']?.['@value'] || null\n            };\n        }\n        return val;\n    }\n\n    function mapDistribution(dist) {\n        return {\n            id: dist['@id'] || null,\n            type: dist['@type'] || null,\n            title: extractValue(dist, 'dct:title'),\n            format: extractValue(dist, 'dct:format'),\n            mediaType: extractValue(dist, 'dcat:mediaType'),\n            accessURL: extractValue(dist, 'dcat:accessURL')\n        };\n    }\n\n    function mapDataset(ds) {\n        return {\n            id: ds['@id'] || null,\n            type: ds['@type'] || null,\n            title: extractValue(ds, 'dct:title'),\n            description: extractValue(ds, 'dct:description'),\n            identifier: extractValue(ds, 'dct:identifier'),\n            publisher: extractValue(ds, 'dct:publisher'),\n            creator: extractValue(ds, 'dct:creator'),\n            contactPoint: {\n                name: extractValue(ds['dcat:contactPoint'], 'vcard:fn'),\n                email: extractValue(ds['dcat:contactPoint'], 'vcard:hasEmail'),\n                url: extractValue(ds['dcat:contactPoint'], 'vcard:hasURL')\n            },\n            issued: extractValue(ds, 'dct:issued'),\n            modified: extractValue(ds, 'dct:modified'),\n            language: extractValue(ds, 'dct:language'),\n            spatial: {\n                label: extractValue(ds['dct:spatial'], 'rdfs:label'),\n                geometry: extractValue(ds['dct:spatial'], 'locn:geometry')\n            },\n            temporal: extractValue(ds, 'dct:temporal'),\n            license: extractValue(ds, 'dct:license'),\n            keyword: extractValue(ds, 'dcat:keyword'),\n            theme: extractValue(ds, 'dcat:theme'),\n            distributions: Array.isArray(ds['dcat:distribution'])\n                ? ds['dcat:distribution'].map(mapDistribution)\n                : []\n        };\n    }\n\n    return {\n        id: jsonld['@id'] || null,\n        type: jsonld['@type'] || null,\n        title: extractValue(jsonld, 'dct:title'),\n        description: extractValue(jsonld, 'dct:description'),\n        publisher: extractValue(jsonld, 'dct:publisher'),\n        language: extractValue(jsonld, 'dct:language'),\n        datasets: Array.isArray(jsonld['dcat:dataset'])\n            ? jsonld['dcat:dataset'].map(mapDataset)\n            : []\n    };\n}\nlet jsonld = msg.payload; // Or load it directly\nmsg.payload = mapJsonLdToPlainJson(jsonld);\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2242,
+        "y": 476,
+        "wires": [
+            [
+                "eab5b3540a6dd352"
+            ]
+        ]
+    },
+    {
+        "id": "e2be269174eb161d",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "jsonld (default)",
+        "func": "// default jsonld. All post-processing delivers a json-ld format.\n// so nothing happens here\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2253,
+        "y": 609,
+        "wires": [
+            [
+                "eab5b3540a6dd352"
+            ]
+        ]
+    },
+    {
+        "id": "f39a1ded107bd4ed",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "jsonld to turtle",
+        "func": "function escapeString(str) {\n    return str.replace(/\"/g, '\\\\\"');\n}\n\nfunction toTriple(subject, predicate, object, isUri = false) {\n    if (!object) return '';\n    if (Array.isArray(object)) {\n        return object.map(o => toTriple(subject, predicate, o, isUri)).join('');\n    }\n    object = isUri ? `<${object}>` : `\"${escapeString(object)}\"`;\n    return `<${subject}> <${predicate}> ${object} .\\n`;\n}\n\nlet jsonld = msg.payload;\nlet ttl = '';\nlet catalog = jsonld;\nlet base = catalog['@id'] || 'http://example.org/catalog';\n\nttl += toTriple(base, 'http://purl.org/dc/terms/title', catalog['dct:title']?.['@value']);\nttl += toTriple(base, 'http://purl.org/dc/terms/description', catalog['dct:description']?.['@value']);\nttl += toTriple(base, 'http://purl.org/dc/terms/language', catalog['dct:language']?.[0]?.['@id'], true);\nttl += toTriple(base, 'http://purl.org/dc/terms/publisher', catalog['dct:publisher']?.['@id'], true);\n\nif (catalog['dcat:dataset']) {\n    catalog['dcat:dataset'].forEach(dataset => {\n        let dUri = dataset['@id'];\n        ttl += toTriple(base, 'http://www.w3.org/ns/dcat#dataset', dUri, true);\n        ttl += toTriple(dUri, 'http://purl.org/dc/terms/title', dataset['dct:title']?.['@value']);\n        ttl += toTriple(dUri, 'http://purl.org/dc/terms/description', dataset['dct:description']?.['@value']);\n        ttl += toTriple(dUri, 'http://purl.org/dc/terms/identifier', dataset['dct:identifier']);\n        ttl += toTriple(dUri, 'http://purl.org/dc/terms/issued', dataset['dct:issued']?.['@value']);\n        ttl += toTriple(dUri, 'http://purl.org/dc/terms/modified', dataset['dct:modified']?.['@value']);\n        ttl += toTriple(dUri, 'http://purl.org/dc/terms/language', dataset['dct:language']?.[0]?.['@id'], true);\n        ttl += toTriple(dUri, 'http://purl.org/dc/terms/license', dataset['dct:license']?.['@id'], true);\n\n        // keywords\n        if (Array.isArray(dataset['dcat:keyword'])) {\n            dataset['dcat:keyword'].forEach(k => {\n                ttl += toTriple(dUri, 'http://www.w3.org/ns/dcat#keyword', k['@value']);\n            });\n        }\n\n        // spatial\n        if (dataset['dct:spatial']) {\n            ttl += toTriple(dUri, 'http://purl.org/dc/terms/spatial', dataset['dct:spatial']['rdfs:label']);\n        }\n\n        // temporal\n        if (dataset['dct:temporal']) {\n            const t = dataset['dct:temporal'];\n            ttl += toTriple(dUri, 'http://purl.org/dc/terms/temporal', `start: ${t['dct:startDate']?.['@value']}, end: ${t['dct:endDate']?.['@value']}`);\n        }\n\n        // distributions\n        if (dataset['dcat:distribution']) {\n            dataset['dcat:distribution'].forEach(dist => {\n                let distUri = dist['@id'];\n                ttl += toTriple(dUri, 'http://www.w3.org/ns/dcat#distribution', distUri, true);\n                ttl += toTriple(distUri, 'http://purl.org/dc/terms/title', dist['dct:title']?.['@value']);\n                ttl += toTriple(distUri, 'http://purl.org/dc/terms/format', dist['dct:format']?.['@id'], true);\n                ttl += toTriple(distUri, 'http://www.w3.org/ns/dcat#mediaType', dist['dcat:mediaType']);\n                ttl += toTriple(distUri, 'http://www.w3.org/ns/dcat#accessURL', dist['dcat:accessURL']?.['@id'], true);\n            });\n        }\n    });\n}\n\nmsg.payload = ttl;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2251,
+        "y": 519,
+        "wires": [
+            [
+                "eab5b3540a6dd352"
+            ]
+        ]
+    },
+    {
+        "id": "e0f80b994885aa82",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "jsonld to html",
+        "func": "function mapJsonLdToPlainJson(jsonld) {\n    function extractValue(obj, key) {\n        if (!obj || !obj[key]) return null;\n        const val = obj[key];\n        if (Array.isArray(val)) return val.map(extractSingleValue);\n        return extractSingleValue(val);\n    }\n\n    function extractSingleValue(val) {\n        if (typeof val === 'string') return val;\n        if (val['@value']) return val['@value'];\n        if (val['@id']) return val['@id'];\n        if (val['foaf:name']) return val['foaf:name'];\n        if (val['rdfs:label']) return val['rdfs:label'];\n        if (val['vcard:fn']) return val['vcard:fn'];\n        if (val['vcard:hasEmail']) return val['vcard:hasEmail'];\n        if (val['vcard:hasURL']) return val['vcard:hasURL'];\n        if (val['locn:geometry']) return val['locn:geometry']['geo:asWKT'] || null;\n        if (val['dct:startDate'] || val['dct:endDate']) {\n            return {\n                start: val['dct:startDate']?.['@value'] || null,\n                end: val['dct:endDate']?.['@value'] || null\n            };\n        }\n        return val;\n    }\n\n    function mapDistribution(dist) {\n        return {\n            id: dist['@id'] || null,\n            type: dist['@type'] || null,\n            title: extractValue(dist, 'dct:title'),\n            format: extractValue(dist, 'dct:format'),\n            mediaType: extractValue(dist, 'dcat:mediaType'),\n            accessURL: extractValue(dist, 'dcat:accessURL')\n        };\n    }\n\n    function mapDataset(ds) {\n        return {\n            id: ds['@id'] || null,\n            type: ds['@type'] || null,\n            title: extractValue(ds, 'dct:title'),\n            description: extractValue(ds, 'dct:description'),\n            identifier: extractValue(ds, 'dct:identifier'),\n            publisher: extractValue(ds, 'dct:publisher'),\n            creator: extractValue(ds, 'dct:creator'),\n            contactPoint: {\n                name: extractValue(ds['dcat:contactPoint'], 'vcard:fn'),\n                email: extractValue(ds['dcat:contactPoint'], 'vcard:hasEmail'),\n                url: extractValue(ds['dcat:contactPoint'], 'vcard:hasURL')\n            },\n            issued: extractValue(ds, 'dct:issued'),\n            modified: extractValue(ds, 'dct:modified'),\n            language: extractValue(ds, 'dct:language'),\n            spatial: {\n                label: extractValue(ds['dct:spatial'], 'rdfs:label'),\n                geometry: extractValue(ds['dct:spatial'], 'locn:geometry')\n            },\n            temporal: extractValue(ds, 'dct:temporal'),\n            license: extractValue(ds, 'dct:license'),\n            keyword: extractValue(ds, 'dcat:keyword'),\n            theme: extractValue(ds, 'dcat:theme'),\n            distributions: Array.isArray(ds['dcat:distribution'])\n                ? ds['dcat:distribution'].map(mapDistribution)\n                : []\n        };\n    }\n\n    return {\n        id: jsonld['@id'] || null,\n        type: jsonld['@type'] || null,\n        title: extractValue(jsonld, 'dct:title'),\n        description: extractValue(jsonld, 'dct:description'),\n        publisher: extractValue(jsonld, 'dct:publisher'),\n        language: extractValue(jsonld, 'dct:language'),\n        datasets: Array.isArray(jsonld['dcat:dataset'])\n            ? jsonld['dcat:dataset'].map(mapDataset)\n            : []\n    };\n}\nlet jsonld = msg.payload; // Or load it directly\nmsg.payload = mapJsonLdToPlainJson(jsonld);\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2242,
+        "y": 565,
+        "wires": [
+            [
+                "eab5b3540a6dd352"
+            ]
+        ]
+    },
+    {
+        "id": "eab5b3540a6dd352",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "Check",
+        "func": "// only for debugging\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2488,
+        "y": 522,
+        "wires": [
+            [
+                "9a9a5b629bb01bc3"
+            ]
+        ]
+    },
+    {
+        "id": "9a9a5b629bb01bc3",
+        "type": "http response",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "response",
+        "statusCode": "",
+        "headers": {},
+        "x": 2655,
+        "y": 521,
+        "wires": []
+    },
+    {
+        "id": "e2eafbf13764669e",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "OpenCatalogi",
+        "func": "// Input: msg.payload from OpenCatalogi API\nconst rawDatasets = msg.payload.results || [];\nconst totalCount = msg.payload.total;\nconst pageSize = msg.payload.limit;\nconst currentPage = msg.payload.page;\nconst totalPages = msg.payload.pages;\n\nconst catalog = {\n    \"@type\": \"dcat:Catalog\",\n    \"@id\": \"https://data.rotterdam.nl/catalog\",\n    \"dct:title\": \"Open Data Catalogus Gemeente Rotterdam\",\n    \"dct:description\":\"Deze catalogus bevat datasets die door de gemeente Rotterdam beschikbaar zijn gesteld als open data.\",\n    \"dct:publisher\": {\n        \"@type\": \"foaf:Organization\",\n        \"foaf:name\": \"Gemeente Rotterdam\",\n        \"@id\": \"https://standaarden.overheid.nl/owms/terms/Gemeente_Rotterdam\"\n    },\n    \"dct:language\": [\n        { \"@id\": \"http://publications.europa.eu/resource/authority/language/NLD\" }\n    ],\n    \"dcat:dataset\": []\n};\n\nfunction safeValue(val, fallback = null) {\n    return val !== undefined && val !== null ? val : fallback;\n}\n\nfor (const entry of rawDatasets) {\n    const data = entry[\"@self\"];\n\n    const dataset = {\n        \"@type\": \"dcat:Dataset\",\n        \"@id\": safeValue(data.uri, \"\"),\n        \"dct:title\": safeValue(data.name, \"\"),\n        \"dct:description\": safeValue(data.description, \"\"),\n        \"dct:identifier\": safeValue(data.id, \"\"),\n        \"dct:publisher\": {\n            \"@type\": \"foaf:Agent\",\n            \"foaf:name\": safeValue(data.publisher || \"Gemeente Rotterdam\")\n        },\n        \"dct:creator\": {  //currently nothing\n                \"@type\": \"foaf:Agent\",\n                \"foaf:name\": \"Afdeling Stadsbeheer\"\n        },\n        \"dcat:contactPoint\": {  //currently nothing\n                \"@type\": \"vcard:Kind\",\n                \"vcard:fn\": \"Data Loket Gemeente Rotterdam\",\n                \"vcard:hasEmail\": \"mailto:dataloket@rotterdam.nl\",\n                \"vcard:hasURL\": {\n                    \"@id\": \"https://data.rotterdam.nl/contact\"\n                }\n        },\n        \"dct:issued\": data.created\n                ? { \"@type\": \"xsd:date\", \"@value\": data.created.split(\"T\")[0] }\n                : undefined,\n        \"dct:modified\": data.updated\n                ? { \"@type\": \"xsd:date\", \"@value\": data.updated.split(\"T\")[0] }\n                : undefined,\n        \"dct:spatial\": {  // currently nothing\n                \"@type\": \"dct:Location\",\n                \"rdfs:label\": \"Gemeente Rotterdam\",\n                \"locn:geometry\": {\n                    \"@type\": \"geo:Geometry\",\n                    \"geo:asWKT\": \"POLYGON((3.971 51.856, 4.599 51.856, 4.599 51.827, 3.971 51.827, 3.971 51.856))\"\n                }\n        },\n        \"dct:temporal\": {  // currently nothing\n                \"@type\": \"dct:PeriodOfTime\",\n                \"dct:startDate\": {\n                    \"@type\": \"xsd:date\",\n                    \"@value\": \"2020-01-01\"\n                },\n                \"dct:endDate\": {\n                    \"@type\": \"xsd:date\",\n                    \"@value\": \"2024-12-31\"\n                }\n        },\n        \"dct:license\": {  // currently nothing\n                \"@id\": \"http://creativecommons.org/publicdomain/zero/1.0/\"\n        },\n        \"dcat:keyword\": [  \"dataset\",\n                \"Fiets\",\n                \"Fietsroute\",\n                \"Fietsroutes\",\n                \"fiets\",\n                \"fietsroute\",\n                \"fietsroutes\"],\n        \"dcat:theme\": (entry.themes || []).map(uuid => ({\n            \"@id\": `https://data.example.org/theme/${uuid}`,\n            \"rdfs:label\": `Thema ${uuid}`\n        })),\n        \"dct:catalog\": (data.catalogs || []).map(c => ({\n            \"@id\": c.uri || \"http://example.org/catalog/unknown\",\n            \"dct:title\": c.title || \"Onbekende catalogus\"\n        })),\n        \"dcat:distribution\": (data.files || []).map(file => ({\n            \"@type\": \"dcat:Distribution\",\n            \"@id\": file.path,\n            \"dct:title\": file.title || file.url,\n            \"dcat:accessURL\": {\n                \"@id\": file.accessUrl\n            },\n            \"dct:format\": {\n                \"@id\": file.format || \"http://publications.europa.eu/resource/authority/file-type/PDF\"\n            },\n            \"dcat:mediaType\": {\n                \"@id\": \"http://www.iana.org/assignments/media-types/\" + (file.type || \"application/pdf\")\n            }\n        }))\n    };\n\n    catalog[\"dcat:dataset\"].push(dataset);\n}\n\ncatalog[\"hydra:totalItems\"] = totalCount;\ncatalog[\"hydra:itemsPerPage\"] = pageSize;\ncatalog[\"hydra:pageIndex\"] = currentPage;\ncatalog[\"hydra:view\"] = {\n    \"@type\": \"hydra:PartialCollectionView\",\n    \"hydra:next\": currentPage < totalPages ? msg.payload.next : null,\n    \"hydra:previous\": currentPage > 1 ? msg.payload.prev : null\n};\nmsg.payload = catalog;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1340,
+        "y": 367,
+        "wires": [
+            [
+                "3c9525260e92b303"
+            ]
+        ]
+    },
+    {
+        "id": "b1c7e162020e421e",
+        "type": "http request",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "oup_ogc_records",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "https://ogc-demo.clearly.app/collections/677e71b550486f0995f97316/items/{{payload.query}}?offset=63",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1068,
+        "y": 527,
+        "wires": [
+            [
+                "15000d9f3b3c253c"
+            ]
+        ]
+    },
+    {
+        "id": "15000d9f3b3c253c",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "oup_ogc_records",
+        "func": "const ogcData = msg.payload;\n\nconst dcatCatalog = {\n    \"@type\": \"dcat:Catalog\",\n    \"@id\": \"https://ogc-demo.clearly.app/catalog\",\n    \"dct:title\": \"Open Data Catalogus Gemeente Rotterdam\",\n    \"dct:description\": \"Deze catalogus bevat datasets van de Gemeente Rotterdam zoals beschikbaar via OGC API.\",\n    \"dct:publisher\": {\n        \"@type\": \"foaf:Organization\",\n        \"foaf:name\": \"Gemeente Rotterdam\",\n        \"@id\": \"https://standaarden.overheid.nl/owms/terms/Gemeente_Rotterdam\"\n    },\n    \"dct:language\": [\n        { \"@id\": \"http://publications.europa.eu/resource/authority/language/NLD\" }\n    ],\n    \"dcat:dataset\": [],\n    \"hydra:totalItems\": ogcData.numberMatched || ogcData.numberReturned || 1,\n    \"hydra:itemsPerPage\": ogcData.numberReturned || 1,\n    \"hydra:pageIndex\": 1,\n    \"hydra:view\": {}\n};\n\n// Add pagination if available\nconst nextLink = ogcData.links?.find(l => l.rel === \"next\");\nif (nextLink) {\n    dcatCatalog[\"hydra:view\"] = {\n        \"@type\": \"hydra:PartialCollectionView\",\n        \"hydra:next\": nextLink.href\n    };\n}\n\n// Ensure features array exists\nlet features = [];\nif (Array.isArray(ogcData.features)) {\n    features = ogcData.features;\n} else if (ogcData.type === \"Feature\") {\n    features = [ogcData]; // wrap single Feature\n}\n\n// Process features\nfeatures.forEach(feature => {\n    const props = feature.properties || {};\n    const geometry = feature.geometry;\n    const links = feature.links || [];\n\n    const dataset = {\n        \"@type\": \"dcat:Dataset\",\n        \"@id\": links.find(l => l.rel === \"self\")?.href || `https://example.com/item/${feature.id}`,\n        \"dct:identifier\": feature.id,\n        \"dct:title\": props.title && props.title.trim() !== \"\" ? props.title : \"Naamloze dataset\",\n        \"dct:description\": props.description && props.description.trim() !== \"\" ? props.description : \"Geen beschrijving beschikbaar.\",\n        \"dct:publisher\": {\n            \"@type\": \"foaf:Agent\",\n            \"foaf:name\": \"Gemeente Rotterdam\"\n        },\n        \"dct:catalog\": \"oup_ogc_records\"\n    };\n\n    // Geometry → WKT polygon\n    if (geometry && geometry.type === \"Polygon\" && geometry.coordinates) {\n        const coords = geometry.coordinates[0].map(pt => `${pt[0]} ${pt[1]}`).join(\", \");\n        dataset[\"dct:spatial\"] = {\n            \"@type\": \"dct:Location\",\n            \"rdfs:label\": \"Gemeente Rotterdam\",\n            \"locn:geometry\": {\n                \"@type\": \"geo:Geometry\",\n                \"geo:asWKT\": `POLYGON((${coords}))`\n            }\n        };\n    }\n\n    // Distributions\n    const distributions = [];\n\n    links.forEach(link => {\n        if (link.rel === \"self\") {\n            distributions.push({\n                \"@type\": \"dcat:Distribution\",\n                \"dct:title\": \"GeoJSON download\",\n                \"dcat:accessURL\": { \"@id\": link.href },\n                \"dct:format\": link.type || \"application/json+geojson\"\n            });\n        } else if (link.type === \"OGC:WFS\") {\n            distributions.push({\n                \"@type\": \"dcat:Distribution\",\n                \"dct:title\": link.title || \"WFS Service\",\n                \"dcat:accessURL\": { \"@id\": link.href },\n                \"dct:format\": \"OGC:WFS\"\n            });\n        } else if (link.type === \"OGC:WMS\") {\n            distributions.push({\n                \"@type\": \"dcat:Distribution\",\n                \"dct:title\": link.title || \"WMS Service\",\n                \"dcat:accessURL\": { \"@id\": link.href },\n                \"dct:format\": \"OGC:WMS\"\n            });\n        }\n    });\n\n    if (distributions.length > 0) {\n        dataset[\"dcat:distribution\"] = distributions;\n    }\n\n    dcatCatalog[\"dcat:dataset\"].push(dataset);\n});\n\nmsg.payload = dcatCatalog;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1348,
+        "y": 527,
+        "wires": [
+            [
+                "3c9525260e92b303"
+            ]
+        ]
+    },
+    {
+        "id": "e6b6b2eef8f5fa7f",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "Multiple Outputs",
+        "func": "const sources = msg.payload.source.split(\",\");\n\nlet messages = [];\n\nsources.forEach(source => {\n    let newMsg = RED.util.cloneMessage(msg);\n    newMsg.payload.source = source.trim();\n    messages.push(newMsg);\n});\n\nreturn [messages]; \n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 156,
+        "y": 397,
+        "wires": [
+            [
+                "520b55b7485372e9",
+                "1054f502853f2ca9"
+            ]
+        ]
+    },
+    {
+        "id": "3c9525260e92b303",
+        "type": "join",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "Combine API Result",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": false,
+        "timeout": "5",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1580,
+        "y": 540,
+        "wires": [
+            [
+                "7470d610e0d583b5",
+                "ead0b437939da269"
+            ]
+        ]
+    },
+    {
+        "id": "7470d610e0d583b5",
+        "type": "function",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "function 1",
+        "func": "msg.payload = {\n  \"@context\": {\n    \"dcat\": \"http://www.w3.org/ns/dcat\",\n    \"dct\": \"http://purl.org/dc/terms/\",\n    \"foaf\": \"http://xmlns.com/foaf/0.1/\",\n    \"xsd\": \"http://www.w3.org/2001/XMLSchema\",\n    \"vcard\": \"http://www.w3.org/2006/vcard/ns\",\n    \"adms\": \"http://www.w3.org/ns/adms\",\n    \"geo\": \"http://www.opengis.net/ont/geosparql\",\n    \"locn\": \"http://www.w3.org/ns/locn\",\n    \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema\",\n    \"hydra\": \"http://www.w3.org/ns/hydra/core\"\n  },\n  \"@graph\": msg.payload // array of Catalog objects from each source\n};\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1800,
+        "y": 540,
+        "wires": [
+            [
+                "8a480b18f6d1ea92",
+                "9e5efc86de920d96"
+            ]
+        ]
+    },
+    {
+        "id": "520b55b7485372e9",
+        "type": "debug",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "ead0b437939da269",
+        "type": "debug",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1760,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "9e5efc86de920d96",
+        "type": "debug",
+        "z": "c638a2b2ec4c7d3f",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1960,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "5a6ce3efb5229512",
         "type": "swagger-doc",
         "summary": "Generic API for federated search",
         "description": "Federated search is executed on endpoints that do have federation functionality like Virtuoso and OpenCatalogi",
@@ -66,781 +886,11 @@
         "deprecated": false
     },
     {
-        "id": "14e850785b3753e5",
-        "type": "http in",
-        "z": "bd803264bdc6f8b2",
-        "name": "/generic_federated_search",
-        "url": "/generic_federated_search",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "1d1dada2ec4b7d92",
-        "x": 130,
-        "y": 120,
-        "wires": [
-            [
-                "c4c73e7b1fe2c7c8",
-                "4ce18126b20c10b5"
-            ]
-        ]
-    },
-    {
-        "id": "c418a1c79da36103",
-        "type": "function",
-        "z": "bd803264bdc6f8b2",
-        "name": "pre-process",
-        "func": "// map incoming fields to application specific fields\n// and/or add logic\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 810,
-        "y": 500,
-        "wires": [
-            [
-                "abb18a42d3f08c09"
-            ]
-        ]
-    },
-    {
-        "id": "ad9cd7255778f89d",
-        "type": "http request",
-        "z": "bd803264bdc6f8b2",
-        "name": "OpenCatalogi",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "body",
-        "url": "https://rotterdam.accept.commonground.nu/apps/opencatalogi/api/federation/publications?_search={{payload.keyword}}&_page={{payload.page}}&@self[register]={{payload.category}}&_limit=20&_facetable=true&_aggregate=true&_extend%5B%5D=%40self.schema&_facets[@self][register][type]=terms&_facets[@self][schema][type]=terms&_facets[@self][created][type]=terms&_facets[@self][updated][type]=terms&_facets[@self][published][type]=terms&_facets[@self][directory][type]=terms&_facets[@self][catalogs][type]=terms",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [],
-        "x": 1000,
-        "y": 420,
-        "wires": [
-            [
-                "71f5b49b15ef6e57"
-            ]
-        ]
-    },
-    {
-        "id": "c0bb5d36db7710af",
-        "type": "http response",
-        "z": "bd803264bdc6f8b2",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 1670,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "437a76010629f313",
-        "type": "function",
-        "z": "bd803264bdc6f8b2",
-        "name": "pre-process",
-        "func": "// map incoming fields to application specific fields\n// and/or add logic\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 810,
-        "y": 420,
-        "wires": [
-            [
-                "ad9cd7255778f89d"
-            ]
-        ]
-    },
-    {
-        "id": "eaf9e9995735104b",
-        "type": "switch",
-        "z": "bd803264bdc6f8b2",
-        "name": "Federate endpoint switch",
-        "property": "payload.federation",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "opencatalogi",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "triply",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "test",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "oup_ogc_records",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "oup_graphql",
-                "vt": "str"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 6,
-        "x": 550,
-        "y": 400,
-        "wires": [
-            [
-                "437a76010629f313",
-                "baa4dbab390b0dbd"
-            ],
-            [
-                "c418a1c79da36103"
-            ],
-            [
-                "3bc52ad95ff9db92",
-                "baa4dbab390b0dbd"
-            ],
-            [
-                "a8327f187ed48793"
-            ],
-            [
-                "74c738bfe750d30b"
-            ],
-            [
-                "437a76010629f313",
-                "baa4dbab390b0dbd"
-            ]
-        ]
-    },
-    {
-        "id": "d0ab57500e93fb14",
-        "type": "comment",
-        "z": "bd803264bdc6f8b2",
-        "name": "OpenCatalogi",
-        "info": "OpenCatalogi",
-        "x": 810,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "88e3946516bda94c",
-        "type": "comment",
-        "z": "bd803264bdc6f8b2",
-        "name": "Triply",
-        "info": "Triply",
-        "x": 790,
-        "y": 460,
-        "wires": []
-    },
-    {
-        "id": "abb18a42d3f08c09",
-        "type": "http request",
-        "z": "bd803264bdc6f8b2",
-        "name": "Linked Data (Triply)",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "https://api.demo.triplydb.com/queries/rotterdam-distributie-geodata/zoeken-over-meerdere-bronnen/6/run?query={{payload.query}}",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [],
-        "x": 1010,
-        "y": 500,
-        "wires": [
-            [
-                "800e8f3368b82509"
-            ]
-        ]
-    },
-    {
-        "id": "800e8f3368b82509",
-        "type": "function",
-        "z": "bd803264bdc6f8b2",
-        "name": "post-process",
-        "func": "//map application specific results to generic json response\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1190,
-        "y": 500,
-        "wires": [
-            [
-                "c0bb5d36db7710af"
-            ]
-        ]
-    },
-    {
-        "id": "3f610a9d8dba9660",
-        "type": "comment",
-        "z": "bd803264bdc6f8b2",
-        "name": "Test with a sample response",
-        "info": "Test",
-        "x": 860,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "71f5b49b15ef6e57",
-        "type": "function",
-        "z": "bd803264bdc6f8b2",
-        "name": "post-process",
-        "func": "const input = msg.payload;\nconst results = input.results || [];\n\nlet transformedResults = results.map(item => {\n    let transformed = {};\n\n    // 1. Copy all top-level fields except \"@self\"\n    for (let key in item) {\n        if (key !== '@self') {\n            transformed[key] = item[key];\n        }\n    }\n\n    const self = item['@self'];\n\n    // 2. Schema object with title + uri\n    if (self?.schema?.title && self?.uri) {\n        transformed[\"schema\"] = {\n            title: self.schema.title,\n            url: self.uri\n        };\n    }\n\n    // 3. Files: convert to array of objects { title, accessUrl }\n    if (Array.isArray(self.files)) {\n        transformed[\"files\"] = self.files\n            .filter(file => file.title && file.accessUrl)\n            .map(file => ({\n                title: file.title,\n                accessUrl: file.accessUrl\n            }));\n    }\n\n    // 4. Metadata between files and catalogs\n    const metaFields = [\n        \"organisation\", \"groups\", \"authorization\", \"geo\", \"updated\",\n        \"created\", \"published\", \"depublished\", \"directory\"\n    ];\n\n    metaFields.forEach(field => {\n        if (self.hasOwnProperty(field)) {\n            transformed[field] = self[field];\n        }\n    });\n\n    // 5. Catalogs: list of titles as string\n    if (Array.isArray(self.catalogs)) {\n        transformed[\"catalogs\"] = self.catalogs.map(c => c.title).join(', ');\n    }\n\n    return transformed;\n});\n\n// 6. Final output object\nlet finalOutput = {\n    items: transformedResults,\n    total: input.total,\n    limit: input.limit,\n    offset: input.offset,\n    page: input.page,\n    pages: input.pages,\n    facets: input.facets || [],\n    facetable: input.facetable || {}\n};\n\nmsg.payload = finalOutput;\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1190,
-        "y": 420,
-        "wires": [
-            [
-                "41fbcf50fe1c0cd9",
-                "c0bb5d36db7710af"
-            ]
-        ]
-    },
-    {
-        "id": "41fbcf50fe1c0cd9",
-        "type": "debug",
-        "z": "bd803264bdc6f8b2",
-        "name": "debug 91",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1400,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "baa4dbab390b0dbd",
-        "type": "debug",
-        "z": "bd803264bdc6f8b2",
-        "name": "debug 92",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 560,
-        "y": 480,
-        "wires": []
-    },
-    {
-        "id": "a8327f187ed48793",
-        "type": "function",
-        "z": "bd803264bdc6f8b2",
-        "name": "pre-process",
-        "func": "// map incoming fields to application specific fields\n// and/or add logic\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 810,
-        "y": 600,
-        "wires": [
-            [
-                "b1c7e162020e421e"
-            ]
-        ]
-    },
-    {
-        "id": "d4cb4aa3a40ff5fa",
-        "type": "comment",
-        "z": "bd803264bdc6f8b2",
-        "name": "OGC Records OUP",
-        "info": "Test",
-        "x": 830,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "b1c7e162020e421e",
-        "type": "http request",
-        "z": "bd803264bdc6f8b2",
-        "name": "Open Urban Platform",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "body",
-        "url": "https://ogc-demo.clearly.app/collections",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [],
-        "x": 1020,
-        "y": 600,
-        "wires": [
-            [
-                "15000d9f3b3c253c"
-            ]
-        ]
-    },
-    {
-        "id": "15000d9f3b3c253c",
-        "type": "function",
-        "z": "bd803264bdc6f8b2",
-        "name": "post-process",
-        "func": "//map application specific results to generic json response\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1210,
-        "y": 600,
-        "wires": [
-            [
-                "c0bb5d36db7710af"
-            ]
-        ]
-    },
-    {
-        "id": "74c738bfe750d30b",
-        "type": "function",
-        "z": "bd803264bdc6f8b2",
-        "name": "pre-process",
-        "func": "// map incoming fields to application specific fields\n// and/or add logic\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 810,
-        "y": 700,
-        "wires": [
-            [
-                "ccca65b6e19f3b61"
-            ]
-        ]
-    },
-    {
-        "id": "f00a75dacadba37a",
-        "type": "comment",
-        "z": "bd803264bdc6f8b2",
-        "name": "OGC GraphQL",
-        "info": "Test",
-        "x": 820,
-        "y": 660,
-        "wires": []
-    },
-    {
-        "id": "ccca65b6e19f3b61",
-        "type": "http request",
-        "z": "bd803264bdc6f8b2",
-        "name": "Open Urban Platform",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "body",
-        "url": "https://ogc-demo.clearly.app/collections",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [],
-        "x": 1020,
-        "y": 700,
-        "wires": [
-            [
-                "85dc505ba58cf4f8"
-            ]
-        ]
-    },
-    {
-        "id": "85dc505ba58cf4f8",
-        "type": "function",
-        "z": "bd803264bdc6f8b2",
-        "name": "post-process",
-        "func": "//map application specific results to generic json response\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1210,
-        "y": 700,
-        "wires": [
-            [
-                "c0bb5d36db7710af"
-            ]
-        ]
-    },
-    {
-        "id": "c0e6165abc99ca8e",
-        "type": "function",
-        "z": "bd803264bdc6f8b2",
-        "name": "Sample file",
-        "func": "// define test json response\n// \nmsg.payload= \n{\n    \"@context\": {\n        \"dcat\": \"http://www.w3.org/ns/dcat#\",\n        \"dct\": \"http://purl.org/dc/terms/\",\n        \"foaf\": \"http://xmlns.com/foaf/0.1/\",\n        \"xsd\": \"http://www.w3.org/2001/XMLSchema#\",\n        \"vcard\": \"http://www.w3.org/2006/vcard/ns#\",\n        \"adms\": \"http://www.w3.org/ns/adms#\",\n        \"geo\": \"http://www.opengis.net/ont/geosparql#\",\n        \"locn\": \"http://www.w3.org/ns/locn#\",\n        \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n    },\n    \"@type\": \"dcat:Catalog\",\n    \"@id\": \"https://data.rotterdam.nl/catalog\",\n    \"dct:title\": {\n        \"@value\": \"Open Data Catalogus Gemeente Rotterdam\",\n        \"@language\": \"nl\"\n    },\n    \"dct:description\": {\n        \"@value\": \"Deze catalogus bevat datasets die door de gemeente Rotterdam beschikbaar zijn gesteld als open data.\",\n        \"@language\": \"nl\"\n    },\n    \"dct:publisher\": {\n        \"@type\": \"foaf:Organization\",\n        \"foaf:name\": \"Gemeente Rotterdam\",\n        \"@id\": \"https://standaarden.overheid.nl/owms/terms/Gemeente_Rotterdam\"\n    },\n    \"dct:language\": [\n        { \"@id\": \"http://publications.europa.eu/resource/authority/language/NLD\" }\n    ],\n    \"dcat:dataset\": [\n        {\n            \"@type\": \"dcat:Dataset\",\n            \"@id\": \"https://data.rotterdam.nl/dataset/bomenbestand\",\n            \"dct:title\": {\n                \"@value\": \"Bomenbestand Rotterdam\",\n                \"@language\": \"nl\"\n            },\n            \"dct:description\": {\n                \"@value\": \"Locatie en kenmerken van bomen in de openbare ruimte van Rotterdam.\",\n                \"@language\": \"nl\"\n            },\n            \"dct:identifier\": \"rotterdam-bomenbestand\",\n            \"dct:publisher\": {\n                \"@id\": \"https://standaarden.overheid.nl/owms/terms/Gemeente_Rotterdam\",\n                \"@type\": \"foaf:Organization\",\n                \"foaf:name\": \"Gemeente Rotterdam\"\n            },\n            \"dct:creator\": {\n                \"@type\": \"foaf:Agent\",\n                \"foaf:name\": \"Afdeling Stadsbeheer\"\n            },\n            \"dcat:contactPoint\": {\n                \"@type\": \"vcard:Kind\",\n                \"vcard:fn\": \"Data Loket Gemeente Rotterdam\",\n                \"vcard:hasEmail\": \"mailto:dataloket@rotterdam.nl\",\n                \"vcard:hasURL\": {\n                    \"@id\": \"https://data.rotterdam.nl/contact\"\n                }\n            },\n            \"dct:issued\": {\n                \"@type\": \"xsd:date\",\n                \"@value\": \"2023-03-01\"\n            },\n            \"dct:modified\": {\n                \"@type\": \"xsd:date\",\n                \"@value\": \"2024-06-15\"\n            },\n            \"dct:language\": [\n                { \"@id\": \"http://publications.europa.eu/resource/authority/language/NLD\" }\n            ],\n            \"dct:spatial\": {\n                \"@type\": \"dct:Location\",\n                \"rdfs:label\": \"Gemeente Rotterdam\",\n                \"locn:geometry\": {\n                    \"@type\": \"geo:Geometry\",\n                    \"geo:asWKT\": \"POLYGON((3.971 51.856, 4.599 51.856, 4.599 51.827, 3.971 51.827, 3.971 51.856))\"\n                }\n            },\n            \"dct:temporal\": {\n                \"@type\": \"dct:PeriodOfTime\",\n                \"dct:startDate\": {\n                    \"@type\": \"xsd:date\",\n                    \"@value\": \"2020-01-01\"\n                },\n                \"dct:endDate\": {\n                    \"@type\": \"xsd:date\",\n                    \"@value\": \"2024-12-31\"\n                }\n            },\n            \"dct:license\": {\n                \"@id\": \"http://creativecommons.org/publicdomain/zero/1.0/\"\n            },\n            \"dcat:keyword\": [\n                { \"@value\": \"bomen\", \"@language\": \"nl\" },\n                { \"@value\": \"groenvoorziening\", \"@language\": \"nl\" }\n            ],\n            \"dcat:theme\": [\n                {\n                    \"@id\": \"http://publications.europa.eu/resource/authority/data-theme/ENVI\",\n                    \"rdfs:label\": {\n                        \"@value\": \"Milieu\",\n                        \"@language\": \"nl\"\n                    }\n                },\n                {\n                    \"@id\": \"http://publications.europa.eu/resource/authority/data-theme/TRAN\",\n                    \"rdfs:label\": {\n                        \"@value\": \"Transport\",\n                        \"@language\": \"nl\"\n                    }\n                }\n            ],\n            \"dcat:distribution\": [\n                {\n                    \"@type\": \"dcat:Distribution\",\n                    \"@id\": \"https://data.rotterdam.nl/distribution/bomenbestand/csv\",\n                    \"dct:format\": {\n                        \"@id\": \"http://publications.europa.eu/resource/authority/file-type/CSV\"\n                    },\n                    \"dcat:accessURL\": {\n                        \"@id\": \"https://data.rotterdam.nl/downloads/bomenbestand.csv\"\n                    },\n                    \"dcat:mediaType\": \"text/csv\",\n                    \"dct:title\": {\n                        \"@value\": \"CSV download bomenbestand\",\n                        \"@language\": \"nl\"\n                    }\n                }\n            ]\n        }\n    ]\n}\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1010,
-        "y": 280,
-        "wires": [
-            [
-                "45c74da220ea7a08"
-            ]
-        ]
-    },
-    {
-        "id": "3bc52ad95ff9db92",
-        "type": "function",
-        "z": "bd803264bdc6f8b2",
-        "name": "pre-process",
-        "func": "// map incoming fields to application specific fields\n// and/or add logic\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 810,
-        "y": 280,
-        "wires": [
-            [
-                "c0e6165abc99ca8e"
-            ]
-        ]
-    },
-    {
-        "id": "45c74da220ea7a08",
-        "type": "function",
-        "z": "bd803264bdc6f8b2",
-        "name": "post-process",
-        "func": "// Zet zoekterm in lower case voor case-insensitive vergelijking\nlet zoekterm = flow.get(\"query\") \n\n// Clone het originele object om niet alles handmatig te reconstrueren\n\nlet originelePayload = JSON.parse(JSON.stringify(msg.payload));\n\n// Filter de datasets op zoekterm in title of description\noriginelePayload[\"dcat:dataset\"] = originelePayload[\"dcat:dataset\"].filter(dataset => {\n    let title = dataset[\"dct:title\"]?.[\"@value\"]?.toLowerCase() || \"\";\n    let description = dataset[\"dct:description\"]?.[\"@value\"]?.toLowerCase() || \"\";\n    return title.includes(zoekterm) || description.includes(zoekterm);\n});\n\n// Zet het aangepaste object als nieuwe payload\nmsg.payload = originelePayload;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1190,
-        "y": 280,
-        "wires": [
-            [
-                "c0bb5d36db7710af",
-                "6125c41a262a9045"
-            ]
-        ]
-    },
-    {
-        "id": "1ac610b1c82b795a",
-        "type": "switch",
-        "z": "bd803264bdc6f8b2",
-        "name": "suggest?",
-        "property": "payload.suggest",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "nnull"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 340,
-        "y": 220,
-        "wires": [
-            [
-                "cf3897dbccc9a18c"
-            ],
-            [
-                "eaf9e9995735104b"
-            ]
-        ]
-    },
-    {
-        "id": "cf3897dbccc9a18c",
-        "type": "function",
-        "z": "bd803264bdc6f8b2",
-        "name": "prepare prompt",
-        "func": "// prepare prompt for openai\n\nvar prompt = []\n\nprompt = \n{\n   \"model\" : \"gpt-3.5-turbo\",\n    \"max_tokens\"  :  1024 ,\n    \"messages\" :  \n        [\n            {\n                \"role\": \"user\",\n                \"content\": [\n                    {\n                        \"type\": \"text\",\n                        \"text\": \"Geef mij een genummerde lijst in de vorm van een json array (id, synoniem) met 3 synoniemen voor \" + msg.payload.query\n                    }\n                ]\n            }\n        ]\n}\n\ndelete msg.payload\n\nmsg.payload = prompt\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 820,
-        "y": 100,
-        "wires": [
-            [
-                "58f0728a26cbba1d",
-                "a2db570e1365910c"
-            ]
-        ]
-    },
-    {
-        "id": "58f0728a26cbba1d",
-        "type": "OpenAI API",
-        "z": "bd803264bdc6f8b2",
-        "name": "chat completion",
-        "property": "payload",
-        "propertyType": "msg",
-        "service": "ddea5c78d72863b4",
-        "method": "createChatCompletion",
-        "x": 1020,
-        "y": 100,
-        "wires": [
-            [
-                "a66877b37b150669",
-                "ae45e857aa0ed8cf"
-            ]
-        ]
-    },
-    {
-        "id": "a380d56172f0dd75",
-        "type": "comment",
-        "z": "bd803264bdc6f8b2",
-        "name": "API Key",
-        "info": "OPENAI_API_KEY="",
-        "x": 1050,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "a66877b37b150669",
-        "type": "function",
-        "z": "bd803264bdc6f8b2",
-        "name": "post-process",
-        "func": "\nvar obj =[]\n// Haal de content-string op\n\nobj = msg.payload.choices[0].message.content;\n\ndelete msg.payload\n\nmsg.payload = obj;\n\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1210,
-        "y": 100,
-        "wires": [
-            [
-                "c0bb5d36db7710af"
-            ]
-        ]
-    },
-    {
-        "id": "a2db570e1365910c",
-        "type": "debug",
-        "z": "bd803264bdc6f8b2",
-        "name": "debug 96",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1000,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "ae45e857aa0ed8cf",
-        "type": "debug",
-        "z": "bd803264bdc6f8b2",
-        "name": "debug 97",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1200,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "6125c41a262a9045",
-        "type": "debug",
-        "z": "bd803264bdc6f8b2",
-        "name": "debug 98",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1360,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "5207d6858c43b485",
-        "type": "comment",
-        "z": "bd803264bdc6f8b2",
-        "name": "Get suggestions on a query",
-        "info": "parameter suggest=true. parameter query contains the term to search for synonyms\n",
-        "x": 860,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "0de6d756a637257d",
-        "type": "comment",
-        "z": "bd803264bdc6f8b2",
-        "name": "Suggest is true?",
-        "info": "In case suggest=true than find suggestions on the query",
-        "x": 360,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "a7a3ec1fdc67c919",
-        "type": "switch",
-        "z": "bd803264bdc6f8b2",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 1540,
-        "y": 120,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "c4c73e7b1fe2c7c8",
-        "type": "change",
-        "z": "bd803264bdc6f8b2",
-        "name": "Save parameters",
-        "rules": [
-            {
-                "t": "set",
-                "p": "federation",
-                "pt": "flow",
-                "to": "payload.federation",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "query",
-                "pt": "flow",
-                "to": "payload.query",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "suggest",
-                "pt": "flow",
-                "to": "payload.suggest",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "source",
-                "pt": "flow",
-                "to": "payload.source",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "model",
-                "pt": "flow",
-                "to": "payload.model",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "format",
-                "pt": "msg",
-                "to": "payload.format",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 150,
-        "y": 220,
-        "wires": [
-            [
-                "1ac610b1c82b795a"
-            ]
-        ]
-    },
-    {
-        "id": "bc1a1a37e1c769c4",
-        "type": "comment",
-        "z": "bd803264bdc6f8b2",
-        "name": "Call the selected endpoint",
-        "info": "In case suggest=true than find suggestions on the query",
-        "x": 550,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "4ce18126b20c10b5",
-        "type": "debug",
-        "z": "bd803264bdc6f8b2",
-        "name": "debug 99",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 360,
-        "y": 80,
-        "wires": []
+        "id": "ddea5c78d72863b4",
+        "type": "Service Host",
+        "apiBase": "https://api.openai.com/v1",
+        "secureApiKeyHeaderOrQueryName": "Authorization",
+        "organizationId": "",
+        "name": ""
     }
 ]
