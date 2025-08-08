@@ -12,7 +12,8 @@ Please see this table to understand the differences between lexical and semantic
 
 <img width="903" height="217" alt="image" src="https://github.com/user-attachments/assets/2032a868-ef46-4a13-ab49-51af14293c76" />
 
-The federation service API gets search requests and return results that conform to an information model. We will use the DCAT standard in the first prototype. This service also allows for querying endpoints that support federation. The service dos not federate in its own. It just passes the query to the endpoint, gets the results, maps this to the information model and return this as a response.
+The federation service API gets search requests and return results that conform to an information model. We will use the DCAT standard in the first prototype. This service also allows for querying endpoints that support federation. It just passes the query to the endpoint, gets the results, maps this to the information model and return this as a response.
+The service also federates in its own. One can query multiple endpoints and once. The service combines the results. 
 
 <img width="806" height="497" alt="image" src="https://github.com/user-attachments/assets/ed63ad11-9168-4aec-88e0-8e438b8fcf78" />
 
