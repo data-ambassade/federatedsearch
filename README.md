@@ -17,3 +17,10 @@ The federation service API gets search requests and return results that conform 
 The service also federates in its own. One can query multiple endpoints and once. The service combines the results. 
 
 <img width="1240" height="748" alt="federated search diagram" src="https://github.com/user-attachments/assets/dbc60e64-f5b1-4f57-9ee4-cfe270b65719" />
+
+**semantical search**
+
+See below the perspective of Gartner on semantics (source: 
+
+<img width="1391" height="777" alt="image" src="https://github.com/user-attachments/assets/f096a17c-57ef-4132-93c5-31cfd3c0d46a" />
+
