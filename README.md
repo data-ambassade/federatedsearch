@@ -20,7 +20,7 @@ The service also federates in its own. One can query multiple endpoints and once
 
 **semantical search**
 
-See below the perspective of Gartner on semantics (source: 
+See below the perspective of Gartner on semantics (source: Gartner - datacatalog - metadatamanagement - 3834620-13613998.pdf)
 
 <img width="1391" height="777" alt="image" src="https://github.com/user-attachments/assets/f096a17c-57ef-4132-93c5-31cfd3c0d46a" />
 
