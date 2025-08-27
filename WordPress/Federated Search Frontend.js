@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const title = typeof item["dct:title"] === "string" ? item["dct:title"] : item["dct:title"]?.["@value"] || "Geen titel";
         const description = typeof item["dct:description"] === "string" ? item["dct:description"] : item["dct:description"]?.["@value"] || "Geen beschrijving";
         const uri = item["@id"] || "#";
-
+        const landingPage = item["dct:landingPage"] ||"";
         // Determine catalog label (what used to be linkText)
         let linkText = "Bekijk";
         const catalog = item["dct:catalog"];
@@ -191,14 +191,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // Build the correct More info URL based on the catalog label
         const encodedId = encodeURIComponent(id || "");
         let infoUrl = uri || "#";
-        if (linkText === "Dimpact") {
-          infoUrl = `https://dimpact.opencatalogi.nl/publicatie/${encodedId}`;
-        } else if (linkText === "High value datasets") {
+        if (landingPage === "") {
           infoUrl = `/detail?id=${encodeURIComponent(id || "")}`;
-        } else if (linkText === "oup_ogc_records") {
-          infoUrl = `https://hub.clearly.app/datasets/${encodedId}/information`;
-        } 
-
+        } else {
+          infoUrl = landingPage;
+        }
         return `
           <div class="result-item" style="margin-bottom: 15px;">
             <h3>${title}</h3>
@@ -208,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <a href="${infoUrl}" target="_blank" rel="noopener" class="more-info-btn">More info</a>
             </div>
             <div class="result-arrow-button">
-              Calalogus:${linkText}
+              Catalogus: ${linkText}
             </div>
           </div>
         `;
