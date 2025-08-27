@@ -28,7 +28,7 @@ The federation backend service API receives search requests from the frontend an
 
 The backend service also federates in its own. One can query multiple endpoints at once. The service combines the results into one response. 
 
-<img width="800" height="500" alt="federated search diagram" src="https://github.com/TopDeveloper77/IMAGE/blob/main/Presentation.jpg" />
+<img width="800" height="500" alt="federated search diagram" src="https://github.com/data-ambassade/federatedsearch/blob/main/context%20diagram.png" />
 
 ## Semantical search
 
