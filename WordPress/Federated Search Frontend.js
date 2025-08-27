@@ -61,11 +61,27 @@ document.addEventListener("DOMContentLoaded", () => {
       .skeleton-line.medium { height: 30px; width: 85%; margin-bottom: 16px; }
       @keyframes pulse { 0% { background-position: -150% 0; } 100% { background-position: 150% 0; } }
 
-      .more-info-btn {
-        display:inline-block; padding:6px 12px; border-radius:6px;
-        background:#0b5ed7; color:#fff; text-decoration:none; font-weight:600;
+      .more-info-btn,
+      .more-info-btn:focus,
+      .more-info-btn:active {
+        display:inline-block;
+        padding:6px 12px;
+        border-radius:6px;
+        background:#0b5ed7;
+        color:#fff;
+        text-decoration:none;
+        font-weight:600;
+        border:none;       /* remove browser border */
+        outline:none;      /* remove default focus outline */
+        cursor:pointer;
       }
-      .more-info-btn:hover { filter: brightness(0.95); }
+
+      .more-info-btn:hover {
+        background:#EF1B2C;
+        color:#fff;
+        text-decoration:none;
+        font-weight:600;
+      }
     `;
     document.head.appendChild(style);
 
