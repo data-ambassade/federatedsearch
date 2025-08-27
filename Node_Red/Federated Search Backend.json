@@ -376,7 +376,7 @@
         "type": "comment",
         "z": "c638a2b2ec4c7d3f",
         "name": "API Key",
-        "info": "OPENAI_API_KEY="Your OpenAI Key",
+        "info": "OPENAI_API_KEY=Your OpenAI Key",
         "x": 1320,
         "y": 160,
         "wires": []
