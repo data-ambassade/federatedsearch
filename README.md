@@ -14,7 +14,7 @@ The project is split into 3 phases whereby future phases build on a stable relea
 
 - lexical search - find results purely on words entered
 - enriched lexical search with support of AI/LLM for enriching the search with synonyms ad suggestions.
-- semantical search 
+- semantical & contextual search applying GraphRAG
 
 Please see this table to understand the differences between lexical and semantical search.
 
@@ -30,7 +30,7 @@ The backend service also federates in its own. One can query multiple endpoints 
 
 <img width="800" height="500" alt="federated search diagram" src="https://github.com/data-ambassade/federatedsearch/blob/main/context%20diagram.png" />
 
-## Semantical search
+## Semantical & contextual search
 
 See below the perspective of Gartner on semantics (source: [Gartner report](https://github.com/data-ambassade/federatedsearch/blob/f4a188ab3a5c314f6362b3722eb76be0d68059cb/Gartner%20-%20datacatalog%20-%20metadatamanagement%20-%203834620-13613998.pdf))
 
