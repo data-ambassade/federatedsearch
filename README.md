@@ -32,7 +32,8 @@ The backend service also federates in its own. One can query multiple endpoints 
 
 ## Semantical & contextual search
 
-See below the perspective of Gartner on semantics (source: [Gartner report](https://github.com/data-ambassade/federatedsearch/blob/f4a188ab3a5c314f6362b3722eb76be0d68059cb/Gartner%20-%20datacatalog%20-%20metadatamanagement%20-%203834620-13613998.pdf))
+See below the perspective of Gartner on semantics (source: Gartner: What Data and Analytics Leaders Should Know Before
+Implementing a Data Catalog - Jason Medd - Data & Analytics summit 11-13 may 2026)
 
 <img width="1391" height="777" alt="image" src="https://github.com/user-attachments/assets/f096a17c-57ef-4132-93c5-31cfd3c0d46a" />
 
