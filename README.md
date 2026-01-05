@@ -22,13 +22,17 @@ Please see this table to understand the differences between lexical and semantic
 
 ## Key functionality 
 
-The frontend is a Wordpress plug-in consisting of a query/result screen and a detail screen. The detail screen is used to show the result of a specific search result in case no landing page is available for the result.
+The frontend is a Wordpress plug-in consisting of a query/result screen and a detail screen ('More Info'). The detail screen is used to show the result of a specific search result. It refers to the actual source of the metadata. In case no reference is supplied a detail page is shown with the metadata that was used for the federated search. 
 
-The federation backend service API receives search requests from the frontend and returns results that conform to the selected standard/model. We will use the DCAT standard in the first prototype. This service queries existing endpoints (REST, GraphQL, SparQL). These endpoints may already support federation (like OpenCatalogi). 
+The federation backend service API (implemented in NodeRed) receives search requests from the frontend and returns results that conform to the selected standard/model. We will use the DCAT standard in the first prototype. This API service queries routes the query to existing endpoints (REST, GraphQL, SparQL). The results from these endpoints is translated into JSON-LD with a DCAT2 compliant structure. 
 
-The backend service also federates in its own. One can query multiple endpoints at once. The service combines the results into one response. 
+The backend service federates in its own (parameter). One can query multiple endpoints at once. The service combines the results into one response.
 
 <img width="800" height="500" alt="federated search diagram" src="https://github.com/data-ambassade/federatedsearch/blob/main/context%20diagram.png" />
+
+## Option to not use node-red
+
+The front-end has the ability to directly call the federated search of OpenCatalogi. In that case the back-end is not used. The results from the OpenCatalogi API are translated internally in the front-end into JSON-LD DCAT2 compliant. One can activitate this option as a parameter in the Wordpress plug-in of the Federated Search.
 
 ## Semantical & contextual search
 
@@ -36,4 +40,5 @@ See below the perspective of Gartner on semantics (source: Gartner: What Data an
 Implementing a Data Catalog - Jason Medd - Data & Analytics summit 11-13 may 2026)
 
 <img width="1391" height="777" alt="image" src="https://github.com/user-attachments/assets/f096a17c-57ef-4132-93c5-31cfd3c0d46a" />
+
 
