@@ -25,19 +25,18 @@ Please see this table to understand the differences between lexical and semantic
 
 The frontend is a Wordpress plug-in consisting of a query/result screen and a detail screen ('More Info'). The detail screen is used to show the result of a specific search result. It refers to the actual source of the metadata. In case no reference is supplied a detail page is shown with the metadata that was used for the federated search. 
 
-The federation backend service API (implemented in NodeRed) receives search requests from the frontend and returns results that conform to the selected standard/model. We will use the DCAT standard in the first prototype. This API service queries routes the query to existing endpoints (REST, GraphQL, SparQL). The results from these endpoints is translated into JSON-LD with a DCAT2 compliant structure. 
-
-The backend service federates in its own (parameter). One can query multiple endpoints at once. The service combines the results into one response.
+The federation backend service API (implemented in NodeRed) receives search requests from the frontend and returns results that conforms to DCAT-AP. This API service queries routes the query to existing endpoints (REST, GraphQL, SparQL). The results from these endpoints is translated into JSON-LD with a DCAT2 compliant structure. 
 
 <img width="800" height="500" alt="federated search diagram" src="https://github.com/data-ambassade/federatedsearch/blob/main/context%20diagram.png" />
 
-### Option to not use node-red
+### Two modes for federation
 
-The front-end has the ability to directly call the federated search API of OpenCatalogi. In that case the back-end is not used. The results from the OpenCatalogi API are translated internally in the front-end into a JSON-LD DCAT2 compliant structure. One can activitate this option as a parameter in the Wordpress plug-in of the Federated Search.
+The frontend has the ability to directly call the federated search API of OpenCatalogi (marked with B). In that case the Node-red backend is not used. The results from the OpenCatalogi API are translated internally in the frontend into a JSON-LD DCAT2 compliant structure. One can activitate this option as a parameter in the Wordpress plug-in of the Federated Search. 
+In the mode marked with A the frontend sends it's query to the federation endpoint. Node-red serves in this case as a router to catalogs. 
 
 ## Semantical & contextual search
 
-The original prototype for searching with natural language used PromptQL as a chat frontend. This has been replaced by a more flexible and simple chatbot Tawk.io and is integrated in the Wordpress website with a plug-in. The contextual search is not implemented. One can simulate this with adding contextual information in the prompt of the chatbot. 
+The original prototype for searching with natural language used PromptQL as a chat frontend. This has been replaced by a more flexible and simple chatbot Tawk.io and is integrated in the Wordpress website as a plug-in. Contextual search is not implemented yet. One can simulate this with adding contextual information in the prompt of the chatbot. 
 
 ### Gartner on semantics
 
