@@ -1,7 +1,7 @@
 NOTICE: THIS REPOSITORY CONTAINS THE DOCUMENTATION AND CODE OF THE PROTOTYPE FOR FEDERATED SEARCH. NO FURTHER DEVELOPMENT.
 # Federated search
 
-Design & development of a customizable user interface (frontend) and federation service (backend API) for federated search with the following services.
+Design & development of a prototype with customizable user interface (frontend) and federation service (backend API) for federated search with the following services:
 
 - Build on existing federation services and search engines
 - Standards & Model-driven - exchange of search results between frontend and backend comply to linked data model - configurable
@@ -9,13 +9,13 @@ Design & development of a customizable user interface (frontend) and federation 
 - AI Ready - backend service as a knowledge graph for LLM
 - Open source
 
-The objective of this development is to deliver a rich solution that helps people in setting up of a federative search based on open source software with a minimal dependency of developers or specific applications. It is easy to setup (docker) and easy to deploy and adapt into an existing infrastructure.
+The objective of this development is to deliver a prototype solution that helps people in setting up of a federative search based on open source software with a minimal dependency of developers or specific applications. It is easy to setup (docker) and easy to deploy and adapt into an existing infrastructure.
+This prototype has been developed within a research of the Grenzenloos Datalandschap. See the report on this research (Dutch): https://grenzeloosdatalandschap.nl/kennis/samen-versnellen-praktijkgids-federatieve-catalogus/
 
-The project is split into 3 phases whereby future phases build on a stable release of a previous phase:
+The development was split into 3 phases:
 
 - lexical search - find results purely on words entered
-- enriched lexical search with support of AI/LLM for enriching the search with synonyms ad suggestions.
-- semantical & contextual search applying GraphRAG
+- semantical & contextual search
 
 Please see this table to understand the differences between lexical and semantical search.
 
@@ -31,14 +31,18 @@ The backend service federates in its own (parameter). One can query multiple end
 
 <img width="800" height="500" alt="federated search diagram" src="https://github.com/data-ambassade/federatedsearch/blob/main/context%20diagram.png" />
 
-## Option to not use node-red
+### Option to not use node-red
 
-The front-end has the ability to directly call the federated search of OpenCatalogi. In that case the back-end is not used. The results from the OpenCatalogi API are translated internally in the front-end into JSON-LD DCAT2 compliant. One can activitate this option as a parameter in the Wordpress plug-in of the Federated Search.
+The front-end has the ability to directly call the federated search API of OpenCatalogi. In that case the back-end is not used. The results from the OpenCatalogi API are translated internally in the front-end into a JSON-LD DCAT2 compliant structure. One can activitate this option as a parameter in the Wordpress plug-in of the Federated Search.
 
 ## Semantical & contextual search
 
+The original prototype for searching with natural language used PromptQL as a chat frontend. This has been replaced by a more flexible and simple chatbot Tawk.io and is integrated in the Wordpress website with a plug-in. The contextual search is not implemented. One can simulate this with adding contextual information in the prompt of the chatbot. 
+
+### Gartner on semantics
+
 See below the perspective of Gartner on semantics (source: Gartner: What Data and Analytics Leaders Should Know Before
-Implementing a Data Catalog - Jason Medd - Data & Analytics summit 11-13 may 2026)
+Implementing a Data Catalog - Jason Medd - Data & Analytics summit 11-13 may 2025)
 
 <img width="1391" height="777" alt="image" src="https://github.com/user-attachments/assets/f096a17c-57ef-4132-93c5-31cfd3c0d46a" />
 
