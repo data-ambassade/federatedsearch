@@ -1,3 +1,4 @@
+NOTICE: THIS REPOSITORY CONTAINS THE DOCUMENTATION AND CODE OF THE PROTOTYPE FOR FEDERATED SEARCH. NO FURTHER DEVELOPMENT.
 # Federated search
 
 Design & development of a customizable user interface (frontend) and federation service (backend API) for federated search with the following services.
